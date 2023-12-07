@@ -1,0 +1,25 @@
+server:
+  port: 9191
+  
+spring:
+  application:
+    name: API-GATEWAY  
+  config:
+    import: configserver:http://localhost:9296
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:9296
+    gateway:
+      routes:
+      - id: PRODUCT-SERVICE
+        uri: lb://PRODUCT-SERVICE/
+        predicates:
+        - Path=/demo1/**
+       
+      - id: CUSTOMER-SERVICE
+        uri: lb://CUSTOMER-SERVICE/
+        predicates:
+        - Path=/demo/**
+
+      
